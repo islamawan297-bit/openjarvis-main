@@ -206,14 +206,10 @@ def get_credential_status(tool_name: str) -> dict[str, bool]:
 def inject_credentials(path: Path | None = None) -> None:
     """Load credentials.toml and inject into os.environ. Call at server startup."""
     creds = load_credentials(path=path)
-    for tool_or_key, kvs in creds.items():
-        if isinstance(kvs, dict):
-            for k, v in kvs.items():
-                if k not in os.environ and isinstance(v, str):
-                    os.environ[k] = v
-        elif isinstance(tool_or_key, str) and isinstance(kvs, str):
-            if tool_or_key not in os.environ:
-                os.environ[tool_or_key] = kvs
+    for _tool, kvs in creds.items():
+        for k, v in kvs.items():
+            if k not in os.environ:
+                os.environ[k] = v
 
 
 def get_tool_credential(

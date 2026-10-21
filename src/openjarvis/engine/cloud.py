@@ -430,22 +430,6 @@ class CloudEngine(InferenceEngine):
         self._init_clients()
 
     def _init_clients(self) -> None:
-        try:
-            from openjarvis.core.paths import get_config_dir
-
-            keys_path = get_config_dir() / "cloud-keys.env"
-            if keys_path.exists():
-                for raw_line in keys_path.read_text(encoding="utf-8").splitlines():
-                    line = raw_line.strip()
-                    if line and not line.startswith("#") and "=" in line:
-                        k, v = line.split("=", 1)
-                        k = k.strip()
-                        v = v.strip()
-                        if k and v:
-                            os.environ.setdefault(k, v)
-        except Exception:
-            pass
-
         if os.environ.get("OPENAI_API_KEY"):
             try:
                 import openai

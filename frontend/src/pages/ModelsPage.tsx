@@ -206,7 +206,7 @@ export function ModelsPage() {
     );
   }
 
-  const openrouterStatus = data?.providers.find((p: RegistryProvider) => p.id === 'openrouter');
+  const openrouterStatus = data?.providers.find((p) => p.id === 'openrouter');
 
   return (
     <div className="flex-1 flex flex-col h-full overflow-y-auto bg-[var(--color-bg-primary)] p-6 space-y-6">
@@ -352,7 +352,7 @@ export function ModelsPage() {
           AI Providers & Authentication Status
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {data?.providers.map((p: RegistryProvider) => {
+          {data?.providers.map((p) => {
             const isTesting = testingProvider === p.id;
             const isMistral = p.id === 'mistral';
             const isInsufficient = p.status === 'INSUFFICIENT CREDITS';
@@ -451,7 +451,7 @@ export function ModelsPage() {
             className="text-xs px-2.5 py-1.5 rounded-lg bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-[var(--color-text)] outline-none cursor-pointer"
           >
             <option value="all">All Providers</option>
-            {data?.providers.map((p: RegistryProvider) => (
+            {data?.providers.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
               </option>
