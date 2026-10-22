@@ -1215,6 +1215,47 @@ async def delete_model(model_name: str, request: Request):
     return {"status": "deleted", "model": model_name}
 
 
+@router.get("/v1/models/registry")
+async def get_models_registry():
+    """Return consolidated AI model registry with live status and hardware safety."""
+    from openjarvis.intelligence.model_registry import get_full_registry
+
+    return get_full_registry()
+
+
+@router.post("/v1/models/test-connection")
+async def test_models_connection(request: Request):
+    """Test authentication and connectivity to a provider without exposing secrets."""
+    from openjarvis.intelligence.model_registry import test_provider_connection
+
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    provider = body.get("provider") or body.get("provider_id", "")
+    if not provider:
+        raise HTTPException(status_code=400, detail="'provider' field is required")
+    return await test_provider_connection(str(provider))
+
+
+@router.post("/v1/models/test-prompt")
+async def test_models_prompt(request: Request):
+    """Send a tiny test prompt to verify actual model generation without fabricating output."""
+    from openjarvis.intelligence.model_registry import test_model_inference
+
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    provider = body.get("provider") or body.get("provider_id", "")
+    model = body.get("model") or body.get("model_id", "")
+    if not provider:
+        raise HTTPException(status_code=400, detail="'provider' field is required")
+    if not model:
+        raise HTTPException(status_code=400, detail="'model' field is required")
+    return await test_model_inference(str(provider), str(model))
+
+
 @router.post("/v1/cloud/reload")
 async def reload_cloud_engine(request: Request):
     """Hot-reload cloud API keys and (re-)initialize the cloud engine.

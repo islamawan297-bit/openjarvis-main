@@ -430,6 +430,23 @@ class CloudEngine(InferenceEngine):
         self._init_clients()
 
     def _init_clients(self) -> None:
+        if not os.environ.get("PYTEST_CURRENT_TEST"):
+            try:
+                from openjarvis.core.paths import get_config_dir
+
+                keys_path = get_config_dir() / "cloud-keys.env"
+                if keys_path.exists():
+                    for raw_line in keys_path.read_text(encoding="utf-8").splitlines():
+                        line = raw_line.strip()
+                        if line and not line.startswith("#") and "=" in line:
+                            k, v = line.split("=", 1)
+                            clean_k = k.strip().lstrip("\ufeff")
+                            clean_v = v.strip()
+                            if clean_k and clean_v:
+                                os.environ.setdefault(clean_k, clean_v)
+            except Exception:
+                pass
+
         if os.environ.get("OPENAI_API_KEY"):
             try:
                 import openai

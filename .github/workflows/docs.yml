@@ -3,16 +3,8 @@ name: Deploy Documentation
 on:
   push:
     branches: [main]
-    paths:
-      - "docs/**"
-      - "mkdocs.yml"
-      - "src/openjarvis/**"
   pull_request:
     branches: [main]
-    paths:
-      - "docs/**"
-      - "mkdocs.yml"
-      - "src/openjarvis/**"
   workflow_dispatch:
 
 permissions:

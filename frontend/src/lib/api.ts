@@ -1226,3 +1226,90 @@ export async function setInferenceSource(
 export const stageInferenceSource = (
   src: InferenceSource & { apiKey?: string },
 ): Promise<void> => setInferenceSource(src, { pending: true });
+
+// ---------------------------------------------------------------------------
+// Model Registry & Diagnostics
+// ---------------------------------------------------------------------------
+
+export interface RegistryModel {
+  id: string;
+  name: string;
+  provider: string;
+  integration: string;
+  description: string;
+  context_length: number;
+  capabilities: string[];
+  status: string;
+  enabled: boolean;
+  last_tested?: number | null;
+  last_latency_ms?: number | null;
+  last_error?: string | null;
+}
+
+export interface RegistryProvider {
+  id: string;
+  name: string;
+  env_key: string;
+  integration: string;
+  description: string;
+  status: string;
+  is_configured: boolean;
+  masked_key?: string | null;
+  last_tested?: number | null;
+  last_latency_ms?: number | null;
+  last_error?: string | null;
+  models: RegistryModel[];
+}
+
+export interface RegistryData {
+  hardware?: {
+    ram_total_gb?: number;
+    ram_available_gb?: number;
+    disk_free_gb?: number;
+    warning?: string | null;
+  };
+  summary: {
+    total_providers: number;
+    configured_providers: number;
+    verified_providers: number;
+    total_models: number;
+    configured_models: number;
+    verified_models: number;
+  };
+  providers: RegistryProvider[];
+}
+
+export async function fetchModelRegistry(): Promise<RegistryData> {
+  const res = await apiFetch('/v1/models/registry');
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function testModelConnection(providerId: string): Promise<{
+  status: string;
+  latency_ms?: number;
+  error?: string;
+}> {
+  const res = await apiFetch('/v1/models/test-connection', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ provider: providerId }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function testModelPrompt(providerId: string, modelId: string): Promise<{
+  status: string;
+  latency_ms?: number;
+  error?: string;
+}> {
+  const res = await apiFetch('/v1/models/test-prompt', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ provider: providerId, model: modelId }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
