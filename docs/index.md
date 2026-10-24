@@ -1,28 +1,64 @@
 ---
-title: OpenJarvis
+title: OpenJarvis - Documentation
 description: Personal AI, On Personal Devices
 search:
   boost: 2
-hide:
-  - navigation
 ---
 
-# Personal AI, On Personal Devices
+<div align="center" style="margin: 1.5rem 0 2rem 0;">
+  <img alt="OpenJarvis" src="assets/OpenJarvis_Horizontal_Logo.png" width="440" style="max-width: 100%; height: auto;">
+  <p style="font-size: 1.25rem; font-weight: 500; margin: 0.8rem 0 1.2rem 0; color: var(--md-default-fg-color--light);">
+    Personal AI, On Personal Devices
+  </p>
+  <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+    <a href="getting-started/installation/" class="md-button md-button--primary">🚀 Get Started</a>
+    <a href="showcase/" class="md-button">💡 Showcase</a>
+    <a href="tutorials/" class="md-button">📚 Tutorials</a>
+    <a href="https://github.com/islamawan297-bit/openjarvis-main" class="md-button">⭐ GitHub</a>
+  </div>
+</div>
 
-<p class="hero-tagline">
-OpenJarvis is a research framework for composable, on-device AI systems.
-Build personal AI that runs on your hardware. Cloud APIs are optional.
+---
+
+<p class="hero-tagline" style="font-size: 1.15rem; text-align: center; margin: 1.5rem auto 2.5rem auto; max-width: 750px;">
+  <strong>OpenJarvis</strong> is an open-source framework for composable, on-device AI systems. Build personal AI that runs locally on your hardware. Cloud APIs are optional.
 </p>
+
+## Quick Navigation
 
 <div class="grid cards" markdown>
 
--   :material-image-multiple:{ .lg .middle } **See what people use it for**
+-   :octicons-rocket-24:{ .lg .middle } **[Getting Started](getting-started/installation/)**
 
     ---
 
-    A gallery of real setups — morning briefs that summarize your overnight Slack and email, a Discord companion that knows your calendar, a code reviewer that works at 30,000 feet. Outcome-first, with links to the docs that explain how to build each one.
+    Quickstart guide, installation options (CLI, Desktop, Browser App, Python SDK), and initial setup.
 
-    [:octicons-arrow-right-24: Browse the Showcase](showcase/index.md)
+    [:octicons-arrow-right-24: Start Setup](getting-started/installation/)
+
+-   :octicons-apps-24:{ .lg .middle } **[Showcase](showcase/)**
+
+    ---
+
+    Real-world setups: morning briefs, persistent memory, cost tracking, and coding companions.
+
+    [:octicons-arrow-right-24: Browse Showcase](showcase/)
+
+-   :octicons-cpu-24:{ .lg .middle } **[Architecture](architecture/overview/)**
+
+    ---
+
+    Five core primitives: Intelligence, Engine, Agents, Tools & Memory, and continuous Learning loops.
+
+    [:octicons-arrow-right-24: Explore Architecture](architecture/overview/)
+
+-   :octicons-book-24:{ .lg .middle } **[User Guide & Tutorials](user-guide/cli/)**
+
+    ---
+
+    In-depth operational manuals, CLI reference, MCP external tools, and task scheduling.
+
+    [:octicons-arrow-right-24: Read User Guide](user-guide/cli/)
 
 </div>
 
